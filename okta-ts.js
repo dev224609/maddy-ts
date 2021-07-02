@@ -35,21 +35,25 @@ function getClientId() {
 //Get UserInfo and redirect DefaultOrg url
 function redirectToDefaultOrg(userInfoUrl) {
 	console.log("userInfoUrl: " + userInfoUrl);
-	const Http = new XMLHttpRequest();
-	Http.open("GET", userInfoUrl, true);
-	//Http.setRequestHeader('Access-Control-Allow-Origin', '*')
-	Http.send();
-	Http.onreadystatechange = (e) => {
-		if (Http.readyState === 4 && Http.status === 200) {
-			var jsonResponse = JSON.parse(Http.responseText);
-			console.log("jsonResponse: " + jsonResponse);
-			if (typeof jsonResponse.profile.defaultOrgUrl !== 'undefined' && jsonResponse.profile.defaultOrgUrl) {
-				window.location.replace(jsonResponse.profile.defaultOrgUrl);
+	jQuery.ajax({
+		url: userInfoUrl,
+		async: false,
+		cache: false,
+		success: function(response) {
+			if (response != null) {
+				console.log("response: " + response);
+				var jsonResponse = JSON.parse(response);
+				console.log("jsonResponse: " + jsonResponse);
+				if (typeof jsonResponse.profile.defaultOrgUrl !== 'undefined' && jsonResponse.profile.defaultOrgUrl) {
+					window.location.replace(jsonResponse.profile.defaultOrgUrl);
+				}
 			}
-		} else {
+		},
+		error: function(response) {
 			console.log("Error When getting UserInfo from Session");
+			console.error(response);
 		}
-	}
+	});
 }
 
 //Render Okta Wgidget
