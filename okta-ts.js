@@ -158,7 +158,7 @@ function updatePWDResetWidget() {
 		const headerWrapper = document.createElement('div');
 		headerWrapper.className = "pwd-header-wrapper";
 		const headerEle = document.createElement('h1');
-		const eleText = document.createTextNode('Welcome to Thoughtspot');
+		const eleText = document.createTextNode('Welcome to TS');
 		headerEle.appendChild(eleText);
 		headerEle.className = "pwd-header-title";
 		headerWrapper.appendChild(headerEle);
